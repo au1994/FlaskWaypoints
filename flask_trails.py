@@ -8,11 +8,20 @@ from bson.json_util import dumps
 from bson.son import SON
 from flask import Flask, request, Response
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = "hiking_trails"
 mongo = PyMongo(app, config_prefix='MONGO')
 
+
+def connect_db(db_name):
+    client = MongoClient()
+    db = client[db_name]
+    
+def drop_db(db_name):
+    client = MongoClient()
+    client.drop_database(db_name)
 
 def toJson(data):
     return json.dumps(data, default=json_util.default)
